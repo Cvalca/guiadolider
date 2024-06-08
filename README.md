@@ -21,3 +21,7 @@ Descrição: Aplicativo para auxiliar Líderes ou aspirantes a liderança com o 
 
 ## Autor
 - [João Victor Cavalcanti](https://github.com/Cvalca)
+
+##Logos
+- [Logo detalhada](https://drive.google.com/file/d/1BpZgoG49u9gk0Qt_BRkMqzIySAGqHkmA/view?usp=sharing)
+- [Logo Pequena](https://drive.google.com/file/d/1ByFbK5jj23vG1XiOPIt7SJQpWrgqdPB2/view?usp=sharing)
