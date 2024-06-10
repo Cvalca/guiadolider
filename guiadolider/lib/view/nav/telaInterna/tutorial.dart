@@ -12,8 +12,14 @@ class _TutorialState extends State<Tutorial> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tutorial'),
+        title: Text('Tutorial', style: TextStyle(color: Color(0XFFFFE45C))),
+        backgroundColor: Color(0xFF5281B3),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Color(0XFFFFE45C)),        
       ),
+
+      backgroundColor: Color(0xFF4C5E72),
+
       body: Center(
         child: ElevatedButton(
           onPressed: () {

@@ -14,8 +14,13 @@ class _ConteudoState extends State<Conteudo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Conteúdos'),
+        title: Text('Conteúdos', style: TextStyle(color: Color(0XFFFFE45C))),
+        backgroundColor: Color(0xFF5281B3),
+        centerTitle: true,
       ),
+
+      backgroundColor: Color(0xFF4C5E72),
+
       body: Center(
         child: ElevatedButton(
           onPressed: () {

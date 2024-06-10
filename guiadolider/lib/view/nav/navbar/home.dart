@@ -14,8 +14,26 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        backgroundColor: Color(0xFF5281B3),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.info_outline),
+            iconSize: 40.0,
+            color: Color(0XFFFFE45C),
+            onPressed: () {
+              // Ação ao pressionar o botão de informação
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Tutorial()),
+                );
+            },
+          ),
+        ],
       ),
+
+      backgroundColor: Color(0xFF4C5E72),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
