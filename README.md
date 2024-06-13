@@ -4,6 +4,7 @@ MVP do Projeto de Fundamentos de Programação aplicada para o Mestrado em infor
 Nome do aplicativo: Guia do Lider App
 
 Descrição: Aplicativo para auxiliar Líderes ou aspirantes a liderança com o aprendizado das habilidades requeridas pelo processo de transformação digital.
+Vídeo de apresentação inicial: [Acesse o vídeo aqui](https://drive.google.com/file/d/1CCc9gSFCAc7hOaeQ0n-h6gMNz-WoJIgb/view?usp=sharing)
 
 ## Funcionalidades esperadas
 
