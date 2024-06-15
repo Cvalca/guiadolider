@@ -8,7 +8,20 @@ class Cadastro extends StatefulWidget {
   State<Cadastro> createState() => _CadastroState();
 }
 
+
 class _CadastroState extends State<Cadastro> {
+  final _formKey = GlobalKey<FormState>();
+  late String _name, _email, _password, _confirmPassword;
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +34,93 @@ class _CadastroState extends State<Cadastro> {
 
       backgroundColor: Color(0xFF4C5E72),
 
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go to Login'),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              Center(
+                child: Image.asset(
+                  'assets/images/logo-login.png', // Caminho da imagem da logomarca
+                  height: 100,
+                ),
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Nome'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira seu nome';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira seu email';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Por favor, insira um email válido';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Senha'),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira sua senha';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _password = value!;
+                },
+              ),
+              TextFormField(
+                controller: _confirmPasswordController,
+                decoration: InputDecoration(labelText: 'Confirmar Senha'),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, confirme sua senha';
+                  }
+                  if (value != _passwordController.text) {
+                    return 'As senhas não coincidem';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    // Limpa o campo de senha após o cadastro ser realizado
+                    _passwordController.clear();
+                    _confirmPasswordController.clear();
+                    // Ação ao cadastrar (apenas para visualização)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Cadastro realizado com sucesso')),
+                    );
+                  }
+                },
+                child: Text('Cadastrar'),
+              ),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  // Ação ao voltar para a tela de login
+                  Navigator.pop(context);
+                },
+                child: Text('Já tem uma conta? Faça login'),
+              ),
+            ],
+          ),
         ),
       ),
     );
