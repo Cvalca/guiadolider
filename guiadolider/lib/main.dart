@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
         "/home": (BuildContext context) => MainNavPage(currentIndex: 0),
         "/cadastrar": (BuildContext context) => const Cadastro(),
         "/tutorial": (BuildContext context) => const Tutorial(),
-        // "/conteudo": (BuildContext context) => MainNavPage(currentIndex: 1),
-        // "/perfil": (BuildContext context) => MainNavPage(currentIndex: 2),
+        "/conteudo": (BuildContext context) => MainNavPage(currentIndex: 1),
+        "/perfil": (BuildContext context) => MainNavPage(currentIndex: 2),
       }
     );
   }

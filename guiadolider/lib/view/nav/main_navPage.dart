@@ -35,8 +35,9 @@ class _MainNavPageState extends State<MainNavPage> {
           onTap: onTap,
           currentIndex: currentIndex,
           iconSize: 30,
-          selectedItemColor: const Color.fromARGB(255, 0, 0, 0),
-          unselectedItemColor: const Color.fromARGB(255, 110, 110, 110),
+          selectedItemColor: const Color(0XFFFFE45C),
+          unselectedItemColor: Color.fromARGB(255, 249, 240, 203),
+          backgroundColor: const Color(0XFF5281B3), // Cor de fundo da navbar
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),

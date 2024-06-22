@@ -11,99 +11,100 @@ class Perfil extends StatefulWidget {
 class _PerfilState extends State<Perfil> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Perfil', style: TextStyle(color: Color(0XFFFFE45C))),
-        backgroundColor: Color(0xFF5281B3),
-        centerTitle: true,
-      ),
-
-      backgroundColor: Color(0xFF4C5E72),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Card(
-              color: Colors.blue[700],
-              margin: EdgeInsets.all(16.0),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+    return WillPopScope(
+      onWillPop: () async {
+        // Navega para a tela inicial ao pressionar o botão voltar do celular
+        Navigator.pushReplacementNamed(context, '/home');
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Perfil', style: TextStyle(color: Color(0XFFFFE45C))),
+          backgroundColor: Color(0xFF5281B3),
+          centerTitle: true,
+        ),
+        backgroundColor: Color(0xFF4C5E72),
+        body: Center(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              double cardWidth = constraints.maxWidth * 0.8;
+              double fontSize = constraints.maxWidth * 0.04;
+              double margin = constraints.maxWidth * 0.04;
+              return SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Nome: Nome Exemplo',
-                      style: TextStyle(
-                        color: Colors.yellow,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Email: email123@gmail.com',
-                      style: TextStyle(
-                        color: Colors.yellow,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Senha: ********',
-                      style: TextStyle(
-                        color: Colors.yellow,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    GestureDetector(
-                      onTap: () => _showChangePasswordDialog(context),
-                      child: Text(
-                        'Alterar senha',
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 14,
-                          decoration: TextDecoration.underline,
+                    Card(
+                      color: Colors.blue[700],
+                      margin: EdgeInsets.all(margin),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          width: cardWidth,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nome: Nome Exemplo',
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontSize: fontSize,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                'Email: email123@gmail.com',
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontSize: fontSize,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                'Senha: ********',
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontSize: fontSize,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              GestureDetector(
+                                onTap: () => _showChangePasswordDialog(context),
+                                child: Text(
+                                  'Alterar senha',
+                                  style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: fontSize * 0.875,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          '/',
+                        );
+                      },
+                      child: Text('Encerrar sessão'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow, // Cor de fundo do botão
+                        foregroundColor: Colors.black, // Cor do texto do botão
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navegar para outra tela
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              },
-              child: Text('Encerrar sessão'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow, // Cor de fundo do botão
-                foregroundColor: Colors.black,  // Cor do texto do botão
-              ),
-            ),
-          ],
+              );
+            },
+          ),
         ),
       ),
-      // body: Center(
-      //   child: Column(
-      //    mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       ElevatedButton(
-      //         onPressed: () {
-      //           Navigator.pushReplacementNamed(
-      //             context,
-      //             '/',
-      //           );
-      //         },
-      //         child: Text('Sair da conta'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 
@@ -111,12 +112,22 @@ class _PerfilState extends State<Perfil> {
     showDialog(
       context: context,
       builder: (context) {
-        TextEditingController currentPasswordController = TextEditingController();
+        TextEditingController currentPasswordController =
+            TextEditingController();
         TextEditingController newPasswordController = TextEditingController();
         final _formKey = GlobalKey<FormState>();
 
         return AlertDialog(
-          title: Text('Alterar senha'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Alterar senha'),
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: Icon(Icons.close),
+              ),
+            ],
+          ),
           content: Form(
             key: _formKey,
             child: Column(
@@ -163,19 +174,6 @@ class _PerfilState extends State<Perfil> {
           ],
         );
       },
-    );
-  }
-}
-
-
-
-class LogoutScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Você encerrou a sessão.'),
-      ),
     );
   }
 }
