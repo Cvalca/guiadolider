@@ -12,6 +12,30 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _loginController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isButtonDisabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loginController.addListener(_validateInputs);
+    _passwordController.addListener(_validateInputs);
+  }
+
+  @override
+  void dispose() {
+    _loginController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _validateInputs() {
+    setState(() {
+      _isButtonDisabled = _loginController.text.isEmpty || _passwordController.text.isEmpty;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +47,6 @@ class _LoginState extends State<Login> {
             iconSize: 40.0,
             color: Color(0XFFFFE45C),
             onPressed: () {
-              // Ação ao pressionar o botão de informação
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Tutorial()),
@@ -55,10 +78,17 @@ class _LoginState extends State<Login> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           TextFormField(
+                            controller: _loginController,
                             decoration: InputDecoration(
                               labelText: 'Login',
                               labelStyle: TextStyle(color: Color(0XFFFFE45C)),
                               hintStyle: TextStyle(color: Color(0XFFFFE45C)),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color(0XFFFFE45C)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
                             ),
                             style: TextStyle(color: Colors.white),
                             validator: (value) {
@@ -73,10 +103,17 @@ class _LoginState extends State<Login> {
                           ),
                           SizedBox(height: constraints.maxHeight * 0.02),
                           TextFormField(
+                            controller: _passwordController,
                             decoration: InputDecoration(
                               labelText: 'Senha',
                               labelStyle: TextStyle(color: Color(0XFFFFE45C)),
                               hintStyle: TextStyle(color: Color(0XFFFFE45C)),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color(0XFFFFE45C)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
                             ),
                             style: TextStyle(color: Colors.white),
                             obscureText: true,
@@ -93,15 +130,18 @@ class _LoginState extends State<Login> {
                           SizedBox(height: constraints.maxHeight * 0.03),
                           Center(
                             child: ElevatedButton(
-                              onPressed: () {
-                                // Simulação de login, substituir pela lógica real
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  '/home',
-                                );
-                              },
+                              onPressed: _isButtonDisabled
+                                  ? null
+                                  : () {
+                                      Navigator.pushReplacementNamed(
+                                        context,
+                                        '/home',
+                                      );
+                                    },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.greenAccent.shade700,
+                                backgroundColor: _isButtonDisabled
+                                    ? Colors.grey
+                                    : Colors.greenAccent.shade700,
                                 padding: EdgeInsets.symmetric(
                                   vertical: constraints.maxHeight * 0.02,
                                   horizontal: constraints.maxWidth * 0.3,
@@ -131,6 +171,7 @@ class _LoginState extends State<Login> {
                                   style: TextStyle(
                                     color: Color(0XFFFFE45C),
                                     decoration: TextDecoration.underline,
+                                    decorationColor: Colors.yellow,
                                   ),
                                 ),
                               ),

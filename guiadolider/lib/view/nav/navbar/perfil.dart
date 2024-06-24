@@ -35,7 +35,7 @@ class _PerfilState extends State<Perfil> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Card(
-                      color: Colors.blue[700],
+                      color: Color(0xFF5281B3),
                       margin: EdgeInsets.all(margin),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -76,6 +76,7 @@ class _PerfilState extends State<Perfil> {
                                     color: Colors.orange,
                                     fontSize: fontSize * 0.875,
                                     decoration: TextDecoration.underline,
+                                    decorationColor: Colors.orange
                                   ),
                                 ),
                               ),
@@ -94,8 +95,8 @@ class _PerfilState extends State<Perfil> {
                       },
                       child: Text('Encerrar sessão'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.yellow, // Cor de fundo do botão
-                        foregroundColor: Colors.black, // Cor do texto do botão
+                        backgroundColor: Colors.red[600], // Cor de fundo do botão
+                        foregroundColor: Colors.white, // Cor do texto do botão
                       ),
                     ),
                   ],
@@ -167,6 +168,16 @@ class _PerfilState extends State<Perfil> {
                 if (_formKey.currentState!.validate()) {
                   // Lógica para alterar a senha
                   Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Senha alterada com sucesso',
+                        style: TextStyle(color: Colors.white), // Cor do texto
+                      ),
+                      backgroundColor: Colors.green, // Cor da barra
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
                 }
               },
               child: Text('Alterar senha'),

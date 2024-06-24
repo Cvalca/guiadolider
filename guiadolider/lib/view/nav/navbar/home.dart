@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
                             widthFactor: cardWidthFactor,
                             child: CardWidget(
                               title: 'Ver conteúdos',
-                              icon: Icons.book,
+                              icon: Icons.book
                             ),
                           ),
                         ),
@@ -128,11 +128,16 @@ class CardWidget extends StatelessWidget {
             Icon(
               icon,
               size: 50,
+              color: Colors.black, // Alteração da cor do ícone para azul
             ),
             SizedBox(height: 10),
             Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.black, // Alteração da cor do texto para azul
+              ),
               textAlign: TextAlign.center,
             ),
           ],

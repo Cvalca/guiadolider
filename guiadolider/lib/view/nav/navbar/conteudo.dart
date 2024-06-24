@@ -10,10 +10,45 @@ class Conteudo extends StatefulWidget {
 
 class _ConteudoState extends State<Conteudo> {
   List<ContentCard> cards = [
-    ContentCard(title: 'Como ser um bom líder na Indústria 4.0', seen: 2, total: 5, isFavorite: true),
-    ContentCard(title: 'Lorem ipsum dolor sit amet consectetur.', seen: 5, total: 5, isFavorite: true),
-    ContentCard(title: 'Lorem ipsum dolor sit amet consectetur.', seen: 0, total: 5, isFavorite: false),
-    ContentCard(title: 'Lorem ipsum dolor sit amet consectetur.', seen: 0, total: 5, isFavorite: false),
+    ContentCard(
+      title: 'Como ser um bom líder na Indústria 4.0?',
+      seen: 2,
+      total: 5,
+      isFavorite: true,
+      subContents: [
+        SubContent(title: 'Introdução', content: 'Texto de introdução para liderança na Indústria 4.0', seen: true),
+        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre liderança na Indústria 4.0', seen: false),
+        SubContent(title: 'Questionário', content: 'Questionário sobre liderança na Indústria 4.0', seen: true),
+        SubContent(title: 'Leitura', content: 'Material de leitura sobre liderança na Indústria 4.0', seen: false),
+        SubContent(title: 'Referências', content: 'Referências sobre liderança na Indústria 4.0', seen: false),
+      ],
+    ),
+    ContentCard(
+      title: 'O que é a Indústria 4.0?',
+      seen: 5,
+      total: 5,
+      isFavorite: true,
+      subContents: [
+        SubContent(title: 'Introdução', content: 'Texto de introdução sobre Indústria 4.0', seen: true),
+        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre Indústria 4.0', seen: true),
+        SubContent(title: 'Questionário', content: 'Questionário sobre Indústria 4.0', seen: true),
+        SubContent(title: 'Leitura', content: 'Material de leitura sobre Indústria 4.0', seen: true),
+        SubContent(title: 'Referências', content: 'Referências sobre Indústria 4.0', seen: true),
+      ],
+    ),
+    ContentCard(
+      title: 'Liderança 4.0',
+      seen: 0,
+      total: 5,
+      isFavorite: false,
+      subContents: [
+        SubContent(title: 'Introdução', content: 'Texto de introdução sobre Liderança 4.0', seen: false),
+        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre Liderança 4.0', seen: false),
+        SubContent(title: 'Questionário', content: 'Questionário sobre Liderança 4.0', seen: false),
+        SubContent(title: 'Leitura', content: 'Material de leitura sobre Liderança 4.0', seen: false),
+        SubContent(title: 'Referências', content: 'Referências sobre Liderança 4.0', seen: false),
+      ],
+    ),
   ];
 
   void toggleFavorite(int index) {
@@ -54,7 +89,7 @@ class _ConteudoState extends State<Conteudo> {
                 if (favoriteCards.isNotEmpty) ...[
                   Text(
                     'Favoritos',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0XFFFFE45C)),
                   ),
                   ...favoriteCards.map((card) => buildCard(card, toggleFavorite, context)).toList(),
                 ],
@@ -62,7 +97,7 @@ class _ConteudoState extends State<Conteudo> {
                 if (otherCards.isNotEmpty) ...[
                   Text(
                     'Outros',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0XFFFFE45C)),
                   ),
                   ...otherCards.map((card) => buildCard(card, toggleFavorite, context)).toList(),
                 ],
@@ -96,10 +131,10 @@ class _ConteudoState extends State<Conteudo> {
                   children: [
                     Text(
                       card.title,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
                     ),
                     SizedBox(height: 5),
-                    Text('Visto ${card.seen}/${card.total}'),
+                    Text('Visto ${card.seen}/${card.total}', style: TextStyle(color: Colors.black)),
                   ],
                 ),
               ),
@@ -123,8 +158,9 @@ class ContentCard {
   int seen;
   int total;
   bool isFavorite;
+  List<SubContent> subContents;
 
-  ContentCard({required this.title, required this.seen, required this.total, required this.isFavorite});
+  ContentCard({required this.title, required this.seen, required this.total, required this.isFavorite, required this.subContents});
 }
 
 class DetailPage extends StatefulWidget {
@@ -139,13 +175,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   late int seen;
   late int total;
-  List<SubContent> subContents = [
-    SubContent(title: 'Introdução', seen: true),
-    SubContent(title: 'Vídeo', seen: false),
-    SubContent(title: 'Questionário', seen: true),
-    SubContent(title: 'Leitura', seen: false),
-    SubContent(title: 'Leitura', seen: false),
-  ];
+  late List<SubContent> subContents;
   int currentIndex = 0;
 
   @override
@@ -153,6 +183,7 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
     seen = widget.card.seen;
     total = widget.card.total;
+    subContents = widget.card.subContents;
   }
 
   void toggleCurrentPageSeen() {
@@ -182,12 +213,13 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     double progress = seen / total;
     SubContent currentContent = subContents[currentIndex];
-    
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Conteúdos', style: TextStyle(color: Color(0XFFFFE45C))),
+        title: Text('Conteúdo', style: TextStyle(color: Color(0XFFFFE45C))),
         backgroundColor: Color(0xFF5281B3),
         centerTitle: true,
+        iconTheme: IconThemeData(color: Color(0XFFFFE45C)),
       ),
       backgroundColor: Color(0xFF4C5E72),
       body: WillPopScope(
@@ -202,7 +234,7 @@ class _DetailPageState extends State<DetailPage> {
               Center(
                 child: Text(
                   widget.card.title,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0XFFFFE45C)),
                 ),
               ),
               SizedBox(height: 20),
@@ -212,7 +244,7 @@ class _DetailPageState extends State<DetailPage> {
                 color: Colors.green,
               ),
               SizedBox(height: 10),
-              Text('Visto $seen/$total'),
+              Text('Visto $seen/$total', style: TextStyle(color: Color(0XFFFFE45C))),
               SizedBox(height: 20),
               Text(
                 'Página ${currentIndex + 1}: ${currentContent.seen ? 'Visto' : 'Não visto'}',
@@ -228,19 +260,20 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       Text(
                         currentContent.title,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
                       ),
                       SizedBox(height: 5),
-                      Text('Lorem ipsum dolor sit amet consectetur.Lorem ipsum dolor sit amet consectetur.'),
-                      SizedBox(height: 5),
-                      Text('Link para o vídeo: Lorem ipsum'),
-                      SizedBox(height: 10),
-                      Icon(Icons.play_circle_outline, size: 50),
+                      Text(currentContent.content),
+                      if (currentContent.title == 'Vídeo') ...[
+                        SizedBox(height: 15),
+                        Icon(Icons.play_circle_outline, size: 50),
+                      ]
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              
+              Spacer(),
               ElevatedButton(
                 onPressed: toggleCurrentPageSeen,
                 child: Text(currentContent.seen ? 'Desmarcar página' : 'Marcar página'),
@@ -255,6 +288,7 @@ class _DetailPageState extends State<DetailPage> {
                       onPressed: navigateToPreviousPage,
                       icon: Icon(Icons.arrow_back),
                       label: Text('Anterior'),
+                      style: ElevatedButton.styleFrom(foregroundColor: Colors.blue),
                     ),
                   ElevatedButton.icon(
                     onPressed: () {
@@ -262,13 +296,14 @@ class _DetailPageState extends State<DetailPage> {
                     },
                     icon: Icon(Icons.close),
                     label: Text('Fechar'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white),
                   ),
                   if (currentIndex < subContents.length - 1)
                     ElevatedButton.icon(
                       onPressed: navigateToNextPage,
                       icon: Icon(Icons.arrow_forward),
                       label: Text('Próximo'),
+                      style: ElevatedButton.styleFrom(foregroundColor: Colors.blue),
                     ),
                 ],
               ),
@@ -282,7 +317,8 @@ class _DetailPageState extends State<DetailPage> {
 
 class SubContent {
   String title;
+  String content;
   bool seen;
 
-  SubContent({required this.title, required this.seen});
+  SubContent({required this.title, required this.content, required this.seen});
 }

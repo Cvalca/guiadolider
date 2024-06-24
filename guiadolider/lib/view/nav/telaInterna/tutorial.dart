@@ -176,7 +176,7 @@ class _TutorialState extends State<Tutorial> {
           Icon(
             Icons.book,
             size: iconSize,
-            color: Colors.black,
+            color: Colors.blue,
           ),
           SizedBox(height: 16),
           Text(
@@ -228,7 +228,7 @@ class _TutorialState extends State<Tutorial> {
           Icon(
             Icons.quiz,
             size: iconSize,
-            color: Colors.black,
+            color: Colors.blue,
           ),
           SizedBox(height: 16),
           Text(

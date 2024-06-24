@@ -40,97 +40,123 @@ class _CadastroState extends State<Cadastro> {
 
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Center(
-                        child: Image.asset(
-                          'assets/images/logo-login.png',
-                          height: constraints.maxHeight * 0.2,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  inputDecorationTheme: InputDecorationTheme(
+                    labelStyle: TextStyle(color: Color(0XFFFFE45C)),
+                    hintStyle: TextStyle(color: Color(0XFFFFE45C)),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0XFFFFE45C)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                  ),
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: Color(0XFFFFE45C),
+                    selectionColor: Color(0XFFFFE45C).withOpacity(0.5),
+                    selectionHandleColor: Color(0XFFFFE45C),
+                  ),
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Center(
+                          child: Image.asset(
+                            'assets/images/logo-login.png',
+                            height: constraints.maxHeight * 0.2,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: paddingVertical),
-                      _buildTextFormField(
-                        label: 'Nome',
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, insira seu nome';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: formFieldHeight),
-                      _buildTextFormField(
-                        label: 'Email',
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, insira seu email';
-                          }
-                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                            return 'Por favor, insira um email válido';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: formFieldHeight),
-                      _buildTextFormField(
-                        label: 'Senha',
-                        controller: _passwordController,
-                        obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, insira sua senha';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _password = value!;
-                        },
-                      ),
-                      SizedBox(height: formFieldHeight),
-                      _buildTextFormField(
-                        label: 'Confirmar Senha',
-                        controller: _confirmPasswordController,
-                        obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, confirme sua senha';
-                          }
-                          if (value != _passwordController.text) {
-                            return 'As senhas não coincidem';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: paddingVertical),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            // Limpa o campo de senha após o cadastro ser realizado
-                            _passwordController.clear();
-                            _confirmPasswordController.clear();
-                            // Ação ao cadastrar (apenas para visualização)
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Cadastro realizado com sucesso')),
-                            );
-                          }
-                        },
-                        child: Text('Cadastrar'),
-                      ),
-                      SizedBox(height: paddingVertical),
-                      TextButton(
-                        onPressed: () {
-                          // Ação ao voltar para a tela de login
-                          Navigator.pop(context);
-                        },
-                        child: Text('Já tem uma conta? Faça login'),
-                      ),
-                    ],
+                        SizedBox(height: paddingVertical),
+                        _buildTextFormField(
+                          label: 'Nome',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, insira seu nome';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        _buildTextFormField(
+                          label: 'Email',
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, insira seu email';
+                            }
+                            if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                              return 'Por favor, insira um email válido';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        _buildTextFormField(
+                          label: 'Senha',
+                          controller: _passwordController,
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, insira sua senha';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _password = value!;
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        _buildTextFormField(
+                          label: 'Confirmar Senha',
+                          controller: _confirmPasswordController,
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, confirme sua senha';
+                            }
+                            if (value != _passwordController.text) {
+                              return 'As senhas não coincidem';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: paddingVertical),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              // Limpa o campo de senha após o cadastro ser realizado
+                              _passwordController.clear();
+                              _confirmPasswordController.clear();
+                              // Ação ao cadastrar (apenas para visualização)
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Cadastro realizado com sucesso')),
+                              );
+                            }
+                          },
+                          child: Text('Cadastrar'),
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white),
+                        ),
+                        SizedBox(height: 20),
+                        TextButton(
+                          onPressed: () {
+                            // Ação ao voltar para a tela de login
+                            Navigator.pop(context);
+                          },
+                          child: Text('Já tem uma conta? Faça login',
+                          style: TextStyle(
+                                      color: Color(0XFFFFE45C),
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Colors.yellow,
+                                    )
+                          )
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -155,11 +181,17 @@ class _CadastroState extends State<Cadastro> {
         labelText: label,
         labelStyle: TextStyle(color: Color(0XFFFFE45C)),
         hintStyle: TextStyle(color: Color(0XFFFFE45C)),
-        border: OutlineInputBorder(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0XFFFFE45C)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        errorStyle: TextStyle(color: Colors.red[200]), // Define a cor dos textos de validação para branco
       ),
       keyboardType: keyboardType,
       obscureText: obscureText,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Color(0XFFFFE45C)),
       validator: validator,
       onSaved: onSaved,
     );
