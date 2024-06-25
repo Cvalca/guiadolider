@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Conteudo extends StatefulWidget {
   const Conteudo({Key? key}) : super(key: key);
@@ -11,14 +12,14 @@ class Conteudo extends StatefulWidget {
 class _ConteudoState extends State<Conteudo> {
   List<ContentCard> cards = [
     ContentCard(
-      title: 'Como ser um bom líder na Indústria 4.0?',
+      title: 'Exemplo empty',
       seen: 2,
       total: 5,
       isFavorite: true,
       subContents: [
         SubContent(title: 'Introdução', content: 'Texto de introdução para liderança na Indústria 4.0', seen: true),
-        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre liderança na Indústria 4.0', seen: false),
-        SubContent(title: 'Questionário', content: 'Questionário sobre liderança na Indústria 4.0', seen: true),
+        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre liderança na Indústria 4.0', seen: false, link: 'https://www.youtube.com/'),
+        SubContent(title: 'Questionário', content: 'Questionário sobre liderança na Indústria 4.0', seen: true, link: 'https://www.google.com.br'),
         SubContent(title: 'Leitura', content: 'Material de leitura sobre liderança na Indústria 4.0', seen: false),
         SubContent(title: 'Referências', content: 'Referências sobre liderança na Indústria 4.0', seen: false),
       ],
@@ -29,22 +30,29 @@ class _ConteudoState extends State<Conteudo> {
       total: 5,
       isFavorite: true,
       subContents: [
-        SubContent(title: 'Introdução', content: 'Texto de introdução sobre Indústria 4.0', seen: true),
-        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre Indústria 4.0', seen: true),
-        SubContent(title: 'Questionário', content: 'Questionário sobre Indústria 4.0', seen: true),
-        SubContent(title: 'Leitura', content: 'Material de leitura sobre Indústria 4.0', seen: true),
-        SubContent(title: 'Referências', content: 'Referências sobre Indústria 4.0', seen: true),
+        SubContent(title: 'Introdução', content: 'A Indústria 4.0 é a nova onda de revolução industrial, onde tecnologias avançadas como inteligência artificial, internet das coisas e automação transformam fábricas tradicionais em espaços inteligentes e conectados. Imagina uma fábrica onde máquinas se comunicam e tomam decisões sozinhas! Isso é a Indústria 4.0. Esse conceito visa aumentar a eficiência, a personalização e a flexibilidade dos processos produtivos, abrindo novas oportunidades para a liderança inovadora.', seen: true),
+        SubContent(title: 'Vídeo', content: 'Quer entender a Indústria 4.0 de forma rápida e visual? Confira este vídeo super interessante.', seen: true, link: 'https://www.youtube.com/watch?v=UHofLsm89pg'),
+        SubContent(title: 'Vídeo', content: 'Um resumo e os impactos da indústria 4.0 podem ser vistos neste vídeo.', seen: true, link: 'https://youtu.be/c-JXF_CcpL4?feature=shared'),
+        SubContent(
+          title: 'Leitura',
+          content: '''- O que é a Indústria 4.0? (https://www.sap.com/brazil/products/scm/industry-4-0/what-is-industry-4-0.html)
+- Indústria 4.0: pilares, tecnologias, impactos e desafios. (https://www.totvs.com/blog/gestao-industrial/industria-4-0/)''',
+          seen: true,
+        ),
+        SubContent(title: 'Leitura', content: '''- Indústria 4.0 - IBM (https://www.ibm.com/br-pt/topics/industry-4-0)
+- Quando surgiu a Indústria 4.0 (https://sebrae.com.br/sites/PortalSebrae/artigos/quando-surgiu-a-industria-40,4542c009cbce3810VgnVCM100000d701210aRCRD)''', 
+          seen: true),
       ],
     ),
     ContentCard(
-      title: 'Liderança 4.0',
+      title: 'Exemplo 2 empty',
       seen: 0,
       total: 5,
       isFavorite: false,
       subContents: [
         SubContent(title: 'Introdução', content: 'Texto de introdução sobre Liderança 4.0', seen: false),
-        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre Liderança 4.0', seen: false),
-        SubContent(title: 'Questionário', content: 'Questionário sobre Liderança 4.0', seen: false),
+        SubContent(title: 'Vídeo', content: 'Link para vídeo sobre Liderança 4.0', seen: false, link: 'https://www.youtube.com/'),
+        SubContent(title: 'Questionário', content: 'Questionário sobre Liderança 4.0', seen: false, link: 'https://www.google.com.br'),
         SubContent(title: 'Leitura', content: 'Material de leitura sobre Liderança 4.0', seen: false),
         SubContent(title: 'Referências', content: 'Referências sobre Liderança 4.0', seen: false),
       ],
@@ -209,6 +217,14 @@ class _DetailPageState extends State<DetailPage> {
     });
   }
 
+  Future<void> _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double progress = seen / total;
@@ -263,21 +279,55 @@ class _DetailPageState extends State<DetailPage> {
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
                       ),
                       SizedBox(height: 5),
-                      Text(currentContent.content),
+                      if (currentContent.title == 'Leitura') ...[
+                        for (var linkText in currentContent.content.split('\n')) ...[
+                          InkWell(
+                            onTap: () {
+                              var url = linkText.substring(linkText.indexOf('(') + 1, linkText.indexOf(')'));
+                              _launchURL(url);
+                            },
+                            child: Text(
+                              linkText.split('(')[0].trim(),
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                        ]
+                      ] else ...[
+                        Text(currentContent.content),
+                      ],
                       if (currentContent.title == 'Vídeo') ...[
                         SizedBox(height: 15),
-                        Icon(Icons.play_circle_outline, size: 50),
-                      ]
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: () => _launchURL(currentContent.link!),
+                          child: Text('Assistir Vídeo'),
+                        ),
+                      ],
+                      if (currentContent.title == 'Questionário') ...[
+                        SizedBox(height: 15),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: () => _launchURL(currentContent.link!),
+                          child: Text('Responder Questionário'),
+                        ),
+                      ],
                     ],
                   ),
                 ),
               ),
-              
               Spacer(),
               ElevatedButton(
                 onPressed: toggleCurrentPageSeen,
                 child: Text(currentContent.seen ? 'Desmarcar página' : 'Marcar página'),
-                style: ElevatedButton.styleFrom(backgroundColor: currentContent.seen ? Colors.red : Colors.green, foregroundColor: Colors.white),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: currentContent.seen ? Colors.red : Colors.green, foregroundColor: Colors.white),
               ),
               SizedBox(height: 20),
               Row(
@@ -319,6 +369,7 @@ class SubContent {
   String title;
   String content;
   bool seen;
+  String? link;
 
-  SubContent({required this.title, required this.content, required this.seen});
+  SubContent({required this.title, required this.content, required this.seen, this.link});
 }

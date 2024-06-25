@@ -4,15 +4,15 @@ MVP do Projeto de Fundamentos de Programação aplicada para o Mestrado em infor
 Nome do aplicativo: Guia do Lider App
 
 Descrição: Aplicativo para auxiliar Líderes ou aspirantes a liderança com o aprendizado das habilidades requeridas pelo processo de transformação digital.
-Vídeo de apresentação inicial: [Acesse o vídeo aqui](https://drive.google.com/file/d/1CCc9gSFCAc7hOaeQ0n-h6gMNz-WoJIgb/view?usp=sharing)
 
-## Funcionalidades esperadas
+- Vídeo de apresentação inicial: [Acesse o vídeo aqui](https://drive.google.com/file/d/1DLumF20pQxTsc07gIl9YVDwLD0AiIg3f/view?usp=sharing)
+- Vídeo de demonstração: [Acesse a demo aqui](https://drive.google.com/file/d/1DMKibPYquVd03ML50WCeg9b3vWW1zdDt/view?usp=sharing)
+## Funcionalidades entregues
 
 - Visualizar cursos e materiais sobre liderança;
-- Realizar quizzes sobre diferentes assuntos de liderança.
 
 ## Documentos com acesso liberado
-- [Documento de formalização do projeto em pdf](https://drive.google.com/file/d/1AU7WRZQdQXPuET4qX3Exj2b-R6DqQmif/view?usp=sharing) (Em atualização)
+- [Documento de formalização do projeto em pdf](https://drive.google.com/file/d/1AU7WRZQdQXPuET4qX3Exj2b-R6DqQmif/view?usp=sharing)
 - [Documento de requisitos em pdf:](https://drive.google.com/file/d/1APc-MUONIaBwD7F4ZDTrs_NacvuAanNq/view?usp=sharing)
 - [Protótipo de alta fidelidade do produto](https://www.figma.com/proto/nJCReXRDI34K6FNT8Q8l92/GDL?node-id=1-4&t=ucoBDJ6l8GmfOmds-1&scaling=scale-down&page-id=0%3A1)
 
